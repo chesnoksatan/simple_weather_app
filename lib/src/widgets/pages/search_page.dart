@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_weather_app/src/backend/service_controller.dart';
+import 'package:simple_weather_app/src/widgets/pages/loading_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -47,8 +48,8 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () {
                       context
                           .read<ServiceController>()
-                          .service
-                          .request(searchController.text);
+                          .requestWeather(searchController.text);
+                      Navigator.pushReplacementNamed(context, LoadingPage.url);
                     },
                     child: const Text("Поиск"),
                   ),
@@ -60,6 +61,4 @@ class _SearchPageState extends State<SearchPage> {
       ),
     );
   }
-
-  void startSearch() {}
 }
