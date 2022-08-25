@@ -18,12 +18,11 @@ class OpenWeatherService extends IWeatherService {
   Future<Weather> request(String city) async {
     final Uri uri = buildUri({"units": "metric", "q": city, "APPID": api.key});
     final http.Response response = await http.get(uri);
-    final body = jsonDecode(response.body);
 
     if (response.statusCode != 200) {
       throw ResponseException(statusCode: response.statusCode);
     }
 
-    return Weather.fromJson(city, body);
+    return Weather.fromJson(city, jsonDecode(response.body));
   }
 }

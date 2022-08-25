@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:simple_weather_app/src/backend/service_interface.dart';
 import 'package:simple_weather_app/src/backend/weather.dart';
 
@@ -18,7 +17,7 @@ class ServiceController extends ChangeNotifier {
   void requestWeather(String city) async {
     clearData();
 
-    if (!(await _checkUserConnection())) {
+    if (!(await InternetConnectionChecker().hasConnection)) {
       isError = true;
       errorString = "Отсутствует подключение к интернету";
       notifyListeners();
@@ -47,12 +46,13 @@ class ServiceController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> _checkUserConnection() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-    } on SocketException catch (_) {
-      return false;
-    }
-  }
+  // Еще один способ проверить соединение с сеть, чтобы не использовать внешние зависимости
+  //   Future<bool> _checkUserConnection() async {
+  //   try {
+  //     final result = await InternetAddress.lookup('example.com');
+  //     return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+  //   } on SocketException catch (_) {
+  //     return false;
+  //   }
+  // }
 }

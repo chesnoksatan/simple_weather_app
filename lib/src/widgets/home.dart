@@ -9,8 +9,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ServiceController controller = context.watch<ServiceController>();
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -26,8 +24,13 @@ class Home extends StatelessWidget {
               ),
               child: Builder(
                 builder: (context) {
+                  final ServiceController controller =
+                      context.watch<ServiceController>();
+
                   if (controller.isError != null ||
                       controller.errorString != null) {
+                    // Данный callback используется в связи с тем, что при перестроении родительского виджета
+                    // нельзя использовать Navigator, потому что setState() or markNeedsBuild() called during build
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       _showMyDialog(context);
                     });
