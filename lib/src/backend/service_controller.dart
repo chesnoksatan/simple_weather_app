@@ -28,15 +28,15 @@ class ServiceController extends ChangeNotifier {
     inProgress = true;
     notifyListeners();
 
-    service.request(city).then((value) {
-      currentWeather = value;
-    }).catchError((e) {
+    try {
+      currentWeather = await service.request(city);
+    } on ResponseException catch (e) {
       isError = true;
       errorString = e.toString();
-    }).whenComplete(() {
+    } finally {
       inProgress = false;
       notifyListeners();
-    });
+    }
   }
 
   void clearData() {

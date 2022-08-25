@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
         const SizedBox(height: 16.0),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(48), // NEW
+            minimumSize: const Size.fromHeight(48),
           ),
           onPressed: search,
           child: const Text("Поиск"),

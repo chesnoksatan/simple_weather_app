@@ -23,3 +23,23 @@ abstract class IWeatherService {
     required this.path,
   });
 }
+
+class ResponseException implements Exception {
+  final int statusCode;
+
+  const ResponseException({required this.statusCode});
+
+  @override
+  String toString() {
+    switch (statusCode) {
+      case 404:
+        return "Город с таким названием не найден";
+      case 401:
+        return "Не валидный публичный ключ";
+      case 400:
+        return "Невозможно отправить пустой запрос";
+      default:
+        return "Неизвестная ошибка";
+    }
+  }
+}

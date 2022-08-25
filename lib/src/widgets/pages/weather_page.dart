@@ -75,7 +75,7 @@ class WeatherPage extends StatelessWidget {
         const SizedBox(height: 16.0),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size.fromHeight(48), // NEW
+            minimumSize: const Size.fromHeight(48),
           ),
           onPressed:
               Provider.of<ServiceController>(context, listen: false).clearData,

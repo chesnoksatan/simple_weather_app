@@ -14,16 +14,16 @@ class Home extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        body: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth:
-                MediaQuery.of(context).orientation == Orientation.landscape
-                    ? 400
-                    : MediaQuery.of(context).size.width,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Center(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth:
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                        ? 400
+                        : MediaQuery.of(context).size.width,
+              ),
               child: Builder(
                 builder: (context) {
                   if (controller.isError != null ||
