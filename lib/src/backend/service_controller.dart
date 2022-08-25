@@ -31,4 +31,12 @@ class ServiceController extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  void clearData() {
+    currentWeather = null;
+    errorString = null;
+    isError = null;
+    inProgress = false;
+    notifyListeners();
+  }
 }
