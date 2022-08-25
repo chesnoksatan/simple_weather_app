@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_weather_app/src/backend/service_controller.dart';
@@ -10,31 +9,68 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<ServiceController>();
+    final ServiceController controller = context.watch<ServiceController>();
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        body: Center(
-          child: Builder(
-            builder: (context) {
-              if (controller.isError != null ||
-                  controller.errorString != null) {
-                // show alert
-                print(controller.errorString);
-              }
+        body: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth:
+                MediaQuery.of(context).orientation == Orientation.landscape
+                    ? 400
+                    : MediaQuery.of(context).size.width,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Center(
+              child: Builder(
+                builder: (context) {
+                  if (controller.isError != null ||
+                      controller.errorString != null) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _showMyDialog(context);
+                    });
+                  }
 
-              if (controller.currentWeather != null) {
-                return const WeatherPage();
-              } else if (controller.inProgress) {
-                return const CircularProgressIndicator();
-              } else {
-                return const SearchPage();
-              }
-            },
+                  if (controller.currentWeather != null) {
+                    return const WeatherPage();
+                  } else if (controller.inProgress) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return const SearchPage();
+                  }
+                },
+              ),
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  _showMyDialog(BuildContext context) {
+    final ServiceController controller =
+        Provider.of<ServiceController>(context, listen: false);
+
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Ошибка запроса погоды'),
+          content: Text(controller.errorString!),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                controller.clearData();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ок'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

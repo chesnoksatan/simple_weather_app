@@ -21,11 +21,9 @@ class ServiceController extends ChangeNotifier {
 
     service.request(city).then((value) {
       currentWeather = value;
-      print(currentWeather);
     }).catchError((e) {
       isError = true;
       errorString = e.toString();
-      print(e);
     }).whenComplete(() {
       inProgress = false;
       notifyListeners();

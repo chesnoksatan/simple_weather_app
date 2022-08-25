@@ -4,7 +4,7 @@ import 'dart:convert' show json;
 
 import 'package:simple_weather_app/src/backend/open_weather_service.dart';
 import 'package:simple_weather_app/src/backend/service_controller.dart';
-import 'package:simple_weather_app/weather.dart';
+import 'package:simple_weather_app/weather_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

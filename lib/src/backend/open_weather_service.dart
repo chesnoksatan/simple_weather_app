@@ -16,9 +16,39 @@ class OpenWeatherService extends IWeatherService {
 
   @override
   Future<Weather> request(String city) async {
-    var uri = buildUri({"q": city, "APPID": api.key});
-    var response = await http.get(uri);
-    await Future.delayed(const Duration(milliseconds: 2000));
-    return Weather.fromJson(city, jsonDecode(response.body));
+    final Uri uri = buildUri({"units": "metric", "q": city, "APPID": api.key});
+    final http.Response response = await http.get(uri);
+    final body = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw ResponseException(statusCode: response.statusCode);
+    }
+
+    return Weather.fromJson(city, body);
   }
+}
+
+class ResponseException implements Exception {
+  final int statusCode;
+
+  const ResponseException({required this.statusCode});
+
+  @override
+  String toString() {
+    switch (statusCode) {
+      case 404:
+        return "Город с таким названием не найден";
+      case 401:
+        return "Не валидный публичный ключ";
+      case 400:
+        return "Невозможно отправить пустой запрос";
+      default:
+        return "Неизвестная ошибка";
+    }
+  }
+}
+
+class CustomException implements Exception {
+  String cause;
+  CustomException(this.cause);
 }
