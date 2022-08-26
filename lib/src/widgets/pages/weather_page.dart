@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_weather_app/src/backend/service_controller.dart';
+import 'package:simple_weather_app/src/backend/weather.dart';
 
 class WeatherPage extends StatelessWidget {
-  const WeatherPage({Key? key}) : super(key: key);
+  final Weather weather;
+
+  const WeatherPage(
+    this.weather, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ServiceController controller = context.watch<ServiceController>();
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          controller.currentWeather!.city,
+          weather.city,
           style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -21,7 +25,7 @@ class WeatherPage extends StatelessWidget {
         ),
         const SizedBox(height: 8.0),
         Text(
-          "${controller.currentWeather!.currentTemperature.toString()} C",
+          "${weather.currentTemperature} C",
           style: const TextStyle(
             fontSize: 24,
           ),
@@ -39,7 +43,7 @@ class WeatherPage extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "${controller.currentWeather!.minTemperature.toString()} C",
+                  "${weather.minTemperature} C",
                   style: const TextStyle(
                     fontSize: 24,
                   ),
@@ -56,7 +60,7 @@ class WeatherPage extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "${controller.currentWeather!.maxTemperature.toString()} C",
+                  "${weather.maxTemperature} C",
                   style: const TextStyle(
                     fontSize: 24,
                   ),

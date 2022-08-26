@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_weather_app/src/backend/service_controller.dart';
@@ -27,12 +25,13 @@ class _SearchPageState extends State<SearchPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextField(
-            controller: searchController,
-            decoration: InputDecoration(
-              labelText: 'Введите название города',
-              errorText:
-                  hasError ? 'Название города не может быть пустым' : null,
-            )),
+          controller: searchController,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: 'Введите название города',
+            errorText: hasError ? 'Название города не может быть пустым' : null,
+          ),
+        ),
         const SizedBox(height: 16.0),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -51,7 +50,8 @@ class _SearchPageState extends State<SearchPage> {
       hasError = city.isEmpty;
     });
     if (city.isNotEmpty) {
-      context.read<ServiceController>().requestWeather(city);
+      Provider.of<ServiceController>(context, listen: false)
+          .requestWeather(city);
     }
   }
 }

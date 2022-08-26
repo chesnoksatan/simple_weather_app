@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_weather_app/src/backend/constants.dart';
 import 'package:simple_weather_app/src/backend/secret.dart';
 import 'package:simple_weather_app/src/backend/weather.dart';
 
@@ -24,6 +25,7 @@ abstract class IWeatherService {
   });
 }
 
+/// Кастомные ошибки, чтобы преобразовать статус запроса к серверу
 class ResponseException implements Exception {
   final int statusCode;
 
@@ -33,13 +35,13 @@ class ResponseException implements Exception {
   String toString() {
     switch (statusCode) {
       case 404:
-        return "Город с таким названием не найден";
+        return ErrorStrings.cityNotFound;
       case 401:
-        return "Не валидный публичный ключ";
+        return ErrorStrings.invalidApi;
       case 400:
-        return "Невозможно отправить пустой запрос";
+        return ErrorStrings.emptyRequest;
       default:
-        return "Неизвестная ошибка";
+        return ErrorStrings.undefinedError;
     }
   }
 }
