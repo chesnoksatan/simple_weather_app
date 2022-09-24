@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' show runApp, WidgetsFlutterBinding;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' show json;
 
 import 'package:simple_weather_app/src/backend/open_weather_service.dart';
@@ -10,11 +11,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final keys = await rootBundle.loadString('keys.json');
+  final preferences = await SharedPreferences.getInstance();
+
   runApp(
     WeatherApp(
       controller: ServiceController(
         service: OpenWeatherService(json.decode(keys)),
       ),
+      preferences: preferences,
     ),
   );
 }

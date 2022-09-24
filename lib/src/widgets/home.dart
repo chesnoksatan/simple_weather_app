@@ -12,40 +12,38 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth:
-                    MediaQuery.of(context).orientation == Orientation.landscape
-                        ? 400
-                        : MediaQuery.of(context).size.width,
-              ),
-              child: Builder(
-                builder: (context) {
-                  final ServiceController controller =
-                      Provider.of<ServiceController>(context);
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth:
+                  MediaQuery.of(context).orientation == Orientation.landscape
+                      ? 400
+                      : MediaQuery.of(context).size.width,
+            ),
+            child: Builder(
+              builder: (context) {
+                final ServiceController controller =
+                    Provider.of<ServiceController>(context);
 
-                  if (controller.isError != null ||
-                      controller.errorString != null) {
-                    // Данный callback используется в связи с тем, что при перестроении родительского виджета
-                    // нельзя использовать Navigator, потому что setState() or markNeedsBuild() called during build
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      _showMyDialog(context);
-                    });
-                  }
+                if (controller.isError != null ||
+                    controller.errorString != null) {
+                  // Данный callback используется в связи с тем, что при перестроении родительского виджета
+                  // нельзя использовать Navigator, потому что setState() or markNeedsBuild() called during build
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _showMyDialog(context);
+                  });
+                }
 
-                  if (controller.currentWeather != null) {
-                    return WeatherPage(controller.currentWeather!);
-                  } else if (controller.inProgress) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return const SearchPage();
-                  }
-                },
-              ),
+                if (controller.currentWeather != null) {
+                  return WeatherPage(controller.currentWeather!);
+                } else if (controller.inProgress) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return const SearchPage();
+                }
+              },
             ),
           ),
         ),

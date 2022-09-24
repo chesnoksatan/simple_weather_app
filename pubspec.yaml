@@ -36,6 +36,8 @@ dependencies:
   provider: ^6.0.3
   http: ^0.13.5
   internet_connection_checker: ^0.0.1+4
+  smooth_page_indicator: ^1.0.0+2
+  shared_preferences: ^2.0.15
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -63,8 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - keys.json
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
