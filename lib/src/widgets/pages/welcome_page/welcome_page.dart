@@ -35,25 +35,30 @@ class _WelcomePageState extends State<WelcomePage> {
           ),
         ),
         Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 64, right: 16),
-            child: TextButton(
-              onPressed: () => widget.onExit?.call(),
-              child: const Text(
-                "Skip",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-        Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 64),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+            padding: const EdgeInsets.all(32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                TextButton(
+                  onPressed: () => widget.onExit?.call(),
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SmoothPageIndicator(
+                  controller: _pageController,
+                  count: items.length,
+                  effect: const ExpandingDotsEffect(
+                    dotHeight: 14,
+                    dotWidth: 14,
+                    spacing: 5,
+                    activeDotColor: Color(0xFF484B5B),
+                    dotColor: Colors.white,
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     if (_pageController.page == items.length - 1) {
@@ -67,18 +72,6 @@ class _WelcomePageState extends State<WelcomePage> {
                   },
                   icon: const Icon(Icons.navigate_next),
                 ),
-                const SizedBox(height: 8.0),
-                SmoothPageIndicator(
-                  controller: _pageController,
-                  count: items.length,
-                  effect: const ExpandingDotsEffect(
-                    dotHeight: 14,
-                    dotWidth: 14,
-                    spacing: 5,
-                    activeDotColor: Color(0xFF484B5B),
-                    dotColor: Colors.white,
-                  ),
-                )
               ],
             ),
           ),
