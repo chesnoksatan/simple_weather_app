@@ -6,6 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class WelcomePage extends StatefulWidget {
   final VoidCallback? onExit;
 
+  static String routeName = "welcome";
+
   const WelcomePage({super.key, this.onExit});
 
   @override
@@ -23,60 +25,62 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        PageView.builder(
-          controller: _pageController,
-          itemCount: items.length,
-          itemBuilder: (context, index) => Slide(
-            header: items[index]["header"]!,
-            description: items[index]["description"]!,
-            asset: items[index]["asset"]!,
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () => widget.onExit?.call(),
-                  child: const Text(
-                    "Skip",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                SmoothPageIndicator(
-                  controller: _pageController,
-                  count: items.length,
-                  effect: const ExpandingDotsEffect(
-                    dotHeight: 14,
-                    dotWidth: 14,
-                    spacing: 5,
-                    activeDotColor: Color(0xFF484B5B),
-                    dotColor: Colors.white,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    if (_pageController.page == items.length - 1) {
-                      widget.onExit?.call();
-                    } else {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 250),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  icon: const Icon(Icons.navigate_next),
-                ),
-              ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: items.length,
+            itemBuilder: (context, index) => Slide(
+              header: items[index]["header"]!,
+              description: items[index]["description"]!,
+              asset: items[index]["asset"]!,
             ),
           ),
-        ),
-      ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () => widget.onExit?.call(),
+                    child: const Text(
+                      "Skip",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SmoothPageIndicator(
+                    controller: _pageController,
+                    count: items.length,
+                    effect: const ExpandingDotsEffect(
+                      dotHeight: 14,
+                      dotWidth: 14,
+                      spacing: 5,
+                      activeDotColor: Color(0xFF2C2D35),
+                      dotColor: Colors.white,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (_pageController.page == items.length - 1) {
+                        widget.onExit?.call();
+                      } else {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.navigate_next),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
