@@ -27,7 +27,6 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // The search area here
         title: Container(
           width: double.infinity,
           height: 40,
@@ -37,42 +36,35 @@ class _SearchPageState extends State<SearchPage> {
           ),
           child: Center(
             child: TextField(
+              controller: searchController,
               decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      /* Clear the search field */
-                    },
-                  ),
-                  hintText: 'Search Location',
-                  border: InputBorder.none),
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  splashRadius: 16.0,
+                  icon: const Icon(Icons.clear),
+                  onPressed: searchController.clear,
+                ),
+                hintText: 'Search Location',
+                border: InputBorder.none,
+              ),
             ),
           ),
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: const [
+            Placeholder(
+              fallbackHeight: 96,
+              child: Center(
+                child: Text("Search history badgies"),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
-    // return Column(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   children: [
-    //     TextField(
-    //       controller: searchController,
-    //       decoration: InputDecoration(
-    //         border: const OutlineInputBorder(),
-    //         labelText: 'Введите название города',
-    //         errorText: hasError ? 'Название города не может быть пустым' : null,
-    //       ),
-    //     ),
-    //     const SizedBox(height: 16.0),
-    //     ElevatedButton(
-    //       style: ElevatedButton.styleFrom(
-    //         minimumSize: const Size.fromHeight(48),
-    //       ),
-    //       onPressed: search,
-    //       child: const Text("Поиск"),
-    //     ),
-    //   ],
-    // );
   }
 
   void search() {

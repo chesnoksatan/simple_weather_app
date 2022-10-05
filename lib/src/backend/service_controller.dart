@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:simple_weather_app/src/backend/constants.dart';
-import 'package:simple_weather_app/src/backend/service_interface.dart';
+import 'package:simple_weather_app/src/backend/services/weather_service_interface.dart';
 import 'package:simple_weather_app/src/backend/weather.dart';
 
 /// Контроллер сервиса погоды
